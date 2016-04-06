@@ -42,13 +42,18 @@ class Erlc(Linter):
 
         this func is overridden so we can handle included directories.
         """
-        command = [self.executable_path, '-W']
-
         settings = self.get_view_settings()
         dirs = settings.get('include_dirs', [])
         pa_dirs = settings.get('pa_dirs', [])
         pz_dirs = settings.get('pz_dirs', [])
         output_dir = settings.get('output_dir', ".")
+
+        if 'cmd' in settings:
+            command = [settings.get('cmd')]
+        else:
+            command = [self.executable_path]
+
+        command.append('-W')
 
         for d in dirs:
             command.extend(["-I", d])

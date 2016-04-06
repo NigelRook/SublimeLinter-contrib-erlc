@@ -34,6 +34,7 @@ In addition to the standard SublimeLinter settings, SublimeLinter-contrib-erlc p
 
 |Setting|Description|
 |:------|:----------|
+|cmd|The erlc executable to list with (default is to let SublimeLinter check your path)
 |include_dirs|A list of directories to be added to the header search paths (-I is not needed).
 |pa_dirs|A list of directories to be added to the beginning of the code path.
 |pz_dirs|A list of directories to be added to the end of the code path.
