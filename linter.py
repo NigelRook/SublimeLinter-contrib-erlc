@@ -9,6 +9,7 @@
 
 """This module exports the Erlc plugin class."""
 
+import os
 from SublimeLinter.lint import Linter, util
 
 
@@ -47,6 +48,7 @@ class Erlc(Linter):
         pa_dirs = settings.get('pa_dirs', [])
         pz_dirs = settings.get('pz_dirs', [])
         output_dir = settings.get('output_dir', ".")
+        deps_dirs = settings.get('deps_dirs', [])
 
         if 'cmd' in settings:
             command = [settings.get('cmd')]
@@ -54,6 +56,12 @@ class Erlc(Linter):
             command = [self.executable_path]
 
         command.append('-W')
+
+        for d in deps_dirs:
+            for dep in (path for path in (os.path.join(d, e) for e in os.listdir(d)) if os.path.isdir(path)):
+                dep_ebin = os.path.join(dep, 'ebin')
+                if os.path.isdir(dep_ebin):
+                    pa_dirs.append(dep_ebin)
 
         for d in dirs:
             command.extend(["-I", d])
